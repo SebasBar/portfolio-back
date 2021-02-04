@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model SebasBar {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  picture           String
+  github_page       String
+  phones            Phones[]
+  emails            Emails[]
+  social_networks   Social_Networks[]
+  documents         Documents[]
+  education         Education[]
+  special_knowledge Special_Knowledge[]
+  work_experience   Work_Experience[]
+
+}
+
+model Phones {
+  id         Int       @id @default(autoincrement())
+  number     Int
+  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
+  sebasBarId Int?
+}
+
+model Emails {
+  id         Int       @id @default(autoincrement())
+  address    String
+  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
+  sebasBarId Int?
+}
+
+model Social_Networks {
+  id         Int       @id @default(autoincrement())
+  number     Int
+  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
+  sebasBarId Int?
+}
+
+model Documents {
+  id         Int       @id @default(autoincrement())
+  name       String
+  document   String
+  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
+  sebasBarId Int?
+}
+
+model Education {
+  id          Int       @id @default(autoincrement())
+  degree      String
+  description String
+  SebasBar    SebasBar? @relation(fields: [sebasBarId], references: [id])
+  sebasBarId  Int?
+}
+
+model Special_Knowledge {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  SebasBar    SebasBar? @relation(fields: [sebasBarId], references: [id])
+  sebasBarId  Int?
+}
+
+model Work_Experience {
+  id           Int       @id @default(autoincrement())
+  company_name String
+  position     String
+  description  String
+  time         String
+  SebasBar     SebasBar? @relation(fields: [sebasBarId], references: [id])
+  sebasBarId   Int?
+}
+
+model Projects {
+  id            Int         @id @default(autoincrement())
+  name          String
+  description   String
+  github_link   String
+  deployed_link String
+  pictures      Pictures[]
+  tech_lang     Tech_Lang[]
+  clients       Clients[]
+  teamates      Teamates[]
+}
+
+model Pictures {
+  id         Int       @id @default(autoincrement())
+  picture    String
+  Projects   Projects? @relation(fields: [projectsId], references: [id])
+  projectsId Int?
+}
+
+model Tech_Lang {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  projects    Projects[]
+}
+
+model Clients {
+  id          Int        @id @default(autoincrement())
+  name        String
+  industry    String
+  description String
+  projects    Projects[]
+}
+
+model Teamates {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  projects    Projects[]
+}
