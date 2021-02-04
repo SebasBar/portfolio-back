@@ -12,7 +12,8 @@ generator client {
 
 model SebasBar {
   id                Int                 @id @default(autoincrement())
-  name              String
+  first_name        String
+  last_name         String
   picture           String
   github_page       String
   phones            Phones[]
@@ -22,12 +23,13 @@ model SebasBar {
   education         Education[]
   special_knowledge Special_Knowledge[]
   work_experience   Work_Experience[]
+  projects          Projects[]
 
 }
 
 model Phones {
   id         Int       @id @default(autoincrement())
-  number     Int
+  number     String
   SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId Int?
 }
@@ -41,7 +43,8 @@ model Emails {
 
 model Social_Networks {
   id         Int       @id @default(autoincrement())
-  number     Int
+  name       String
+  address    String
   SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId Int?
 }
@@ -58,6 +61,7 @@ model Education {
   id          Int       @id @default(autoincrement())
   degree      String
   description String
+  time        String?
   SebasBar    SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId  Int?
 }
@@ -85,11 +89,13 @@ model Projects {
   name          String
   description   String
   github_link   String
-  deployed_link String
+  deployed_link String?
   pictures      Pictures[]
   tech_lang     Tech_Lang[]
   clients       Clients[]
   teamates      Teamates[]
+  SebasBar      SebasBar?   @relation(fields: [sebasBarId], references: [id])
+  sebasBarId    Int?
 }
 
 model Pictures {
@@ -117,6 +123,6 @@ model Clients {
 model Teamates {
   id          Int        @id @default(autoincrement())
   name        String
-  description String
+  github_link String?
   projects    Projects[]
 }
