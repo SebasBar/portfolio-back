@@ -5,15 +5,26 @@ const mainRouter = require("./routes");
 const errorMiddleware = require("./middleware/error-handdling.middleware");
 const error = require("http-errors");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const bcrypt = require("bcryptjs");
 
 const PORT = process.env.PORT || 8000;
 
+app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(mainRouter);
 
 app.use("*", (req, res, next) => {
   next(error(404, "Page not found"));
 });
+
+async function hashed() {
+  const hashedPassword = await bcrypt.hash("12345", 12);
+  return hashedPassword;
+}
+
+hashed().then((hash) => console.log(hash));
 
 app.use(errorMiddleware);
 

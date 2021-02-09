@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const sebasRoutes = require("./sebasbar.routes");
 const projectRoutes = require("./projects.routes");
-const { projects } = require("../config/prisma-config");
+const authRoutes = require("./auth.routes");
 
 router.get("/", (req, res, next) => {
   res.json({
@@ -10,6 +10,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.use("/sebasbar", sebasRoutes);
-router.use("/sebasbar", projectRoutes);
+router.use("/projects", projectRoutes);
+router.use("/auth", authRoutes);
 
 module.exports = router;

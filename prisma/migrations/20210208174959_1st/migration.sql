@@ -1,7 +1,8 @@
 -- CreateTable
 CREATE TABLE "SebasBar" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "first_name" TEXT NOT NULL,
+    "last_name" TEXT NOT NULL,
     "picture" TEXT NOT NULL,
     "github_page" TEXT NOT NULL,
 
@@ -9,9 +10,19 @@ CREATE TABLE "SebasBar" (
 );
 
 -- CreateTable
+CREATE TABLE "Credentials" (
+    "id" SERIAL NOT NULL,
+    "user" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "sebasBarId" INTEGER,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Phones" (
     "id" SERIAL NOT NULL,
-    "number" INTEGER NOT NULL,
+    "number" TEXT NOT NULL,
     "sebasBarId" INTEGER,
 
     PRIMARY KEY ("id")
@@ -29,7 +40,8 @@ CREATE TABLE "Emails" (
 -- CreateTable
 CREATE TABLE "Social_Networks" (
     "id" SERIAL NOT NULL,
-    "number" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
     "sebasBarId" INTEGER,
 
     PRIMARY KEY ("id")
@@ -50,6 +62,7 @@ CREATE TABLE "Education" (
     "id" SERIAL NOT NULL,
     "degree" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "time" TEXT,
     "sebasBarId" INTEGER,
 
     PRIMARY KEY ("id")
@@ -83,7 +96,8 @@ CREATE TABLE "Projects" (
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "github_link" TEXT NOT NULL,
-    "deployed_link" TEXT NOT NULL,
+    "deployed_link" TEXT,
+    "sebasBarId" INTEGER,
 
     PRIMARY KEY ("id")
 );
@@ -120,7 +134,7 @@ CREATE TABLE "Clients" (
 CREATE TABLE "Teamates" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "github_link" TEXT,
 
     PRIMARY KEY ("id")
 );
@@ -162,6 +176,9 @@ CREATE UNIQUE INDEX "_ProjectsToTeamates_AB_unique" ON "_ProjectsToTeamates"("A"
 CREATE INDEX "_ProjectsToTeamates_B_index" ON "_ProjectsToTeamates"("B");
 
 -- AddForeignKey
+ALTER TABLE "Credentials" ADD FOREIGN KEY ("sebasBarId") REFERENCES "SebasBar"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Phones" ADD FOREIGN KEY ("sebasBarId") REFERENCES "SebasBar"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -181,6 +198,9 @@ ALTER TABLE "Special_Knowledge" ADD FOREIGN KEY ("sebasBarId") REFERENCES "Sebas
 
 -- AddForeignKey
 ALTER TABLE "Work_Experience" ADD FOREIGN KEY ("sebasBarId") REFERENCES "SebasBar"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Projects" ADD FOREIGN KEY ("sebasBarId") REFERENCES "SebasBar"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Pictures" ADD FOREIGN KEY ("projectsId") REFERENCES "Projects"("id") ON DELETE SET NULL ON UPDATE CASCADE;
