@@ -5,7 +5,6 @@ const {
   updateSebasInfo,
   deleteSebasInfo,
   connectProject,
-  connectCredential,
   connectPhone,
   connectEmail,
   connectSocialNetwork,
@@ -25,7 +24,6 @@ router.get("/", getSebasInfo);
 router.get("/credentials", authenticationMiddleware, getCredentials);
 router.delete("/delete", authenticationMiddleware, deleteSebasInfo);
 router.put("/project/:projectId", connectProject);
-router.put("/credential/:credentialId", connectCredential);
 router.put("/phone/:phoneId", connectPhone);
 router.put("/email/:emailId", connectEmail);
 router.put("/socialnetwork/:socialNetworkId", connectSocialNetwork);

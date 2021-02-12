@@ -14,35 +14,26 @@ exports.login = async (req, res, next) => {
     if (!credentials) {
       throw createError(401, "Problem with credentials on the DB");
     }
-    // const hashedPassword = await bcrypt.hash(password, 12);
-
     const isUserEqual = user === credentials.user;
     if (!isUserEqual) {
       throw createError(401, "Wrong user");
     }
-    // const isPasswordEqual = password === credentials.password;
-    const isPasswordEqual = await bcrypt.compare(
-      password,
-      credentials.password
-    );
-    // console.log(`Hashedpassword: ${credentials.password}`);
-    // console.log(`password: ${password}`);
-    // console.log(hashedPassword);
-
-    if (!isPasswordEqual) {
-      throw createError(401, "Wrong password");
-    }
-
-    const token = jwt.sign({ id: credentials.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+    bcrypt.compare(password, credentials.password, function (err, resp) {
+      if (err) {
+        throw createError(401, "Wrong password");
+      }
+      if (resp) {
+        const token = jwt.sign({ id: credentials.id }, process.env.JWT_SECRET, {
+          expiresIn: "1h",
+        });
+        res
+          .status(200)
+          .cookie("token", token, { httpOnly: true })
+          .json({ login: true, token, credentialsId: credentials.id });
+      } else {
+        res.json({ success: false, message: "passwords do not match" });
+      }
     });
-
-    res
-      .status(200)
-      // .cookie("login", true, { httpOnly: true })
-      // .json({ login: true, userId: credentials.user });
-      .cookie("token", token, { httpOnly: true })
-      .json({ token, credentialsId: credentials.id });
   } catch (err) {
     next(err);
   }

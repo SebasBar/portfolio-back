@@ -119,26 +119,6 @@ exports.connectProject = async (req, res, next) => {
   }
 };
 
-exports.connectCredential = async (req, res, next) => {
-  try {
-    const credentialId = Number(req.params.credentialId);
-    const credential = await client.credentials.findUnique({
-      where: { id: credentialId },
-    });
-    if (!credential) {
-      throw createError(404, "Credential not found");
-    }
-    const updatedSebasBar = await client.sebasBar.update({
-      where: { id: 1 },
-      data: { credentials: { connect: { id: credentialId } } },
-      include: { credentials: true },
-    });
-    res.status(200).json(updatedSebasBar);
-  } catch (err) {
-    next(err);
-  }
-};
-
 exports.connectPhone = async (req, res, next) => {
   try {
     const phoneId = Number(req.params.phoneId);

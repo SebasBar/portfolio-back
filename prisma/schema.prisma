@@ -16,7 +16,6 @@ model SebasBar {
   last_name         String
   picture           String
   github_page       String
-  credentials       Credentials[]
   phones            Phones[]
   emails            Emails[]
   social_networks   Social_Networks[]
@@ -29,11 +28,9 @@ model SebasBar {
 }
 
 model Credentials {
-  id         Int       @id @default(autoincrement())
-  user       String
-  password   String
-  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
-  sebasBarId Int?
+  id       Int    @id @default(autoincrement())
+  user     String
+  password String
 }
 
 model Phones {
