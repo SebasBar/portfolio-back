@@ -1,6 +1,7 @@
 const client = require("../../config/prisma-config");
 const createError = require("http-errors");
 
+//is not adding the github link
 exports.createTeamate = async (req, res, next) => {
   try {
     const { name, github_link } = req.body;
