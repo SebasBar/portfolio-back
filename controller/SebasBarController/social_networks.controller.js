@@ -1,4 +1,5 @@
-const client = require("../config/prisma-config");
+const client = require("../../config/prisma-config");
+const createError = require("http-errors");
 
 exports.createSocialNetwork = async (req, res, next) => {
   try {
@@ -7,7 +8,6 @@ exports.createSocialNetwork = async (req, res, next) => {
       data: {
         name,
         address,
-        sebasBarId: 1,
       },
     });
     const updatedSebasBar = await client.sebasBar.update({
@@ -23,7 +23,8 @@ exports.createSocialNetwork = async (req, res, next) => {
 exports.getSocialNetworks = async (req, res, next) => {
   try {
     const socialNetworks = await client.social_Networks.findMany({
-      include: {
+      select: {
+        id: true,
         name: true,
         address: true,
       },
@@ -44,10 +45,11 @@ exports.deleteSocialNetwork = async (req, res, next) => {
       where: { id: socialNetworkId },
     });
     if (!socialNetwork) {
-      throw createError(404, "social network not found");
+      throw createError(404, "Social network not found");
     }
     const deletedSocialNetwork = await client.social_Networks.delete({
       where: { id: socialNetworkId },
+      select: { name: true, address: true },
     });
     res.status(200).json(deletedSocialNetwork);
   } catch (err) {

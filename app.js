@@ -19,13 +19,6 @@ app.use("*", (req, res, next) => {
   next(error(404, "Page not found"));
 });
 
-// async function hashed() {
-//   const hashedPassword = await bcrypt.hash("12345", 12);
-//   return hashedPassword;
-// }
-
-// hashed().then((hash) => console.log(hash));
-
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {

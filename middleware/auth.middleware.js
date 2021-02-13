@@ -1,16 +1,7 @@
-// module.exports = (req, res, next) => {
-//   if (req.cookies.login === "true") {
-//     next();
-//   } else {
-//     res.status(403).json({ message: "Unauthorized!" });
-//   }
-// };
-
 const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
-  // req.headers, req.body, req.userId
   if (!req.cookies.token) {
     throw createError(401);
   }

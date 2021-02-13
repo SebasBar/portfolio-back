@@ -1,4 +1,5 @@
-const client = require("../config/prisma-config");
+const client = require("../../config/prisma-config");
+const createError = require("http-errors");
 
 exports.createEmail = async (req, res, next) => {
   try {
@@ -21,8 +22,10 @@ exports.createEmail = async (req, res, next) => {
 exports.getEmails = async (req, res, next) => {
   try {
     const emails = await client.emails.findMany({
-      include: {
+      select: {
+        id: true,
         address: true,
+        sebasBarId: true,
       },
     });
     if (!emails) {
@@ -45,6 +48,7 @@ exports.deleteEmail = async (req, res, next) => {
     }
     const deletedEmail = await client.emails.delete({
       where: { id: emailId },
+      select: { address: true },
     });
     res.status(200).json(deletedEmail);
   } catch (err) {

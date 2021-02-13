@@ -1,7 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
-const client = new PrismaClient();
+const client = require("../../config/prisma-config");
 const createError = require("http-errors");
-const { credentials } = require("../config/prisma-config");
 
 exports.createSebasInfo = async (req, res, next) => {
   try {

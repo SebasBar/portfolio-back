@@ -3,11 +3,11 @@ const {
   getSocialNetworks,
   deleteSocialNetwork,
   updateSocialNetwork,
-} = require("../controller/social_networks.controller");
+} = require("../../controller/SebasBarController/social_networks.controller");
 
 const router = require("express").Router();
 
-const authenticationMiddleware = require("../middleware/auth.middleware");
+const authenticationMiddleware = require("../../middleware/auth.middleware");
 
 router.post("/", authenticationMiddleware, createSocialNetwork);
 router.get("/", getSocialNetworks);
@@ -16,6 +16,10 @@ router.delete(
   authenticationMiddleware,
   deleteSocialNetwork
 );
-router.put("/socialnetwork/:socialNetworkId", updateSocialNetwork);
+router.put(
+  "/socialnetwork/:socialNetworkId",
+  authenticationMiddleware,
+  updateSocialNetwork
+);
 
 module.exports = router;

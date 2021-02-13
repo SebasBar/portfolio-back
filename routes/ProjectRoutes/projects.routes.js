@@ -8,11 +8,11 @@ const {
   connectClient,
   connectTeamate,
   connectPicture,
-} = require("../controller/projects.controller");
+} = require("../../controller/ProjectController/projects.controller");
 
 const router = require("express").Router();
 
-const authenticationMiddleware = require("../middleware/auth.middleware");
+const authenticationMiddleware = require("../../middleware/auth.middleware");
 
 router.post("/", authenticationMiddleware, createProject);
 router.post(
@@ -22,7 +22,7 @@ router.post(
 );
 router.get("/", getProjects);
 router.delete("/project/:projectId", authenticationMiddleware, deleteProject);
-router.put("/project/:projectId", updateProject);
+router.put("/project/:projectId", authenticationMiddleware, updateProject);
 router.put("/techlang/:projectId", connectTechLang);
 router.put("/client/:projectId", connectClient);
 router.put("/teamate/:projectId", connectTeamate);

@@ -12,11 +12,11 @@ const {
   connectEducation,
   connectSpecialknowledge,
   connectWorkExperience,
-} = require("../controller/sebasbar.controller");
+} = require("../../controller/SebasBarController/sebasbar.controller");
 
 const router = require("express").Router();
 
-const authenticationMiddleware = require("../middleware/auth.middleware");
+const authenticationMiddleware = require("../../middleware/auth.middleware");
 
 router.post("/", authenticationMiddleware, createSebasInfo);
 router.put("/", authenticationMiddleware, updateSebasInfo);

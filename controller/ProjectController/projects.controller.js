@@ -1,4 +1,5 @@
-const client = require("../config/prisma-config");
+const client = require("../../config/prisma-config");
+const createError = require("http-errors");
 
 exports.createProject = async (req, res, next) => {
   try {
