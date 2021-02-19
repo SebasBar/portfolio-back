@@ -14,6 +14,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(mainRouter);
 
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 app.use("*", (req, res, next) => {
   next(error(404, "Page not found"));
 });
