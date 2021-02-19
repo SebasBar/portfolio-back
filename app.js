@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const client = require("./config/prisma-config");
 const mainRouter = require("./routes");
 const errorMiddleware = require("./middleware/error-handdling.middleware");
 const error = require("http-errors");
