@@ -5,7 +5,7 @@ const errorMiddleware = require("./middleware/error-handdling.middleware");
 const error = require("http-errors");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const bcrypt = require("bcryptjs");
+const path = require("path");
 
 const PORT = process.env.PORT || 8000;
 

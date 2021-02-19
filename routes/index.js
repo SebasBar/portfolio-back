@@ -1,4 +1,7 @@
 const router = require("express").Router();
+const express = require("express");
+const app = express();
+const path = require("path");
 const sebasRoutes = require("./SebasBarRoutes/sebasbar.routes");
 const projectRoutes = require("./ProjectRoutes/projects.routes");
 const authRoutes = require("./SecurityRoutes/auth.routes");
@@ -13,10 +16,16 @@ const clientRoutes = require("./ProjectRoutes/clients.routes");
 const teamatesRoutes = require("./ProjectRoutes/teamates.routes");
 const picturesRoutes = require("./ProjectRoutes/pictures.routes");
 
-router.get("/", (req, res, next) => {
-  res.json({
-    ok: "thanks to the 10000 gods I commend my prays that this is working:)",
-  });
+// router.get("/", (req, res, next) => {
+//   res.json({
+//     ok: "thanks to the 10000 gods I commend my prays that this is working:)",
+//   });
+// });
+
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 router.use("/sebasbar", sebasRoutes);
