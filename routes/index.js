@@ -19,6 +19,10 @@ router.get("/", (req, res, next) => {
   });
 });
 
+// router.get("/*", function (req, res) {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
+
 router.use("/sebasbar", sebasRoutes);
 router.use("/projects", projectRoutes);
 router.use("/auth", authRoutes);

@@ -15,6 +15,14 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(mainRouter);
 
+//to add the front end
+
+// app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 app.use("*", (req, res, next) => {
   next(error(404, "Page not found"));
 });

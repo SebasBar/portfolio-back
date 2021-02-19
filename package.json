@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon app.js"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "NODE_ENV=production node app.js",
+		"migrate:dev": "npx prisma migrate dev --preview-feature",
+		"start:dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -23,5 +25,8 @@
     "nodemon": "^2.0.7",
     "prisma": "^2.16.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@prisma/cli": "^2.14.0",
+		"nodemon": "^2.0.6"
+  }
 }
