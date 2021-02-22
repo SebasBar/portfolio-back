@@ -1,6 +1,7 @@
 const {
   createTechLang,
   getTechLang,
+  getOneTechLang,
   deleteTechLang,
   updateTechLang,
 } = require("../../controller/ProjectController/tech_lang.controller");
@@ -11,6 +12,7 @@ const authenticationMiddleware = require("../../middleware/auth.middleware");
 
 router.post("/:projectId", authenticationMiddleware, createTechLang);
 router.get("/", getTechLang);
+router.get("/:techlangId", getOneTechLang);
 router.delete(
   "/techlang/:techlangId",
   authenticationMiddleware,

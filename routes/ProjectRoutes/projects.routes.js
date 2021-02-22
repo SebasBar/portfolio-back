@@ -1,6 +1,7 @@
 const {
   createProject,
   getProjects,
+  getOneProject,
   deleteProject,
   updateProject,
   createProjectNoConnected,
@@ -21,6 +22,7 @@ router.post(
   createProjectNoConnected
 );
 router.get("/", getProjects);
+router.get("/project/:projectId", getOneProject);
 router.delete("/project/:projectId", authenticationMiddleware, deleteProject);
 router.put("/project/:projectId", authenticationMiddleware, updateProject);
 router.put("/techlang/:projectId", connectTechLang);

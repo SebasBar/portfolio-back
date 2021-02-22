@@ -15,6 +15,7 @@ model SebasBar {
   first_name        String
   last_name         String
   picture           String
+  profile           String?
   github_page       String
   phones            Phones[]
   emails            Emails[]
@@ -94,6 +95,8 @@ model Projects {
   id            Int         @id @default(autoincrement())
   name          String
   description   String
+  description2  String?
+  description3  String?
   github_link   String
   deployed_link String?
   pictures      Pictures[]

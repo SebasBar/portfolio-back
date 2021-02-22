@@ -12,10 +12,10 @@ exports.createTeamate = async (req, res, next) => {
         github_link,
       },
     });
-    const updatedProject = await client.projects.update({
-      where: { id: projectId },
-      data: { teamates: { connect: { id: newTeamate.id } } },
-    });
+    // const updatedProject = await client.projects.update({
+    //   where: { id: projectId },
+    //   data: { teamates: { connect: { id: newTeamate.id } } },
+    // });
     res.status(200).json(newTeamate);
   } catch (err) {
     next(err);
@@ -36,6 +36,21 @@ exports.getTeamates = async (req, res, next) => {
       throw createError(404, "Information not found");
     }
     res.status(200).json(teamates);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getOneTeamate = async (req, res, next) => {
+  try {
+    const teamateId = Number(req.params.teamateId);
+    const teamate = await client.teamates.findUnique({
+      where: { id: teamateId },
+    });
+    if (!teamate) {
+      throw createError(404, "Teamate not found");
+    }
+    res.status(200).json(teamate);
   } catch (err) {
     next(err);
   }
