@@ -4,7 +4,6 @@ const createError = require("http-errors");
 exports.createClient = async (req, res, next) => {
   try {
     const { name, industry, description } = req.body;
-    const projectId = Number(req.params.projectId);
     const newClient = await client.clients.create({
       data: {
         name,

@@ -10,7 +10,7 @@ const router = require("express").Router();
 
 const authenticationMiddleware = require("../../middleware/auth.middleware");
 
-router.post("/:projectId", authenticationMiddleware, createClient);
+router.post("/", authenticationMiddleware, createClient);
 router.get("/", getClients);
 router.get("/:clientId", getOneClient);
 router.delete("/client/:clientId", authenticationMiddleware, deleteClient);

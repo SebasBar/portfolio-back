@@ -4,7 +4,6 @@ const createError = require("http-errors");
 exports.createTechLang = async (req, res, next) => {
   try {
     const { name, description } = req.body;
-    const projectId = Number(req.params.projectId);
     const newTechLang = await client.tech_Lang.create({
       data: {
         name,
