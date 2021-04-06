@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(mainRouter);
-
+app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/", (req, res) => {
