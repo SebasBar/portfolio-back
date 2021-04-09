@@ -4,16 +4,11 @@ const createError = require("http-errors");
 exports.createTechLang = async (req, res, next) => {
   try {
     const { name, description } = req.body;
-    const projectId = Number(req.params.projectId);
     const newTechLang = await client.tech_Lang.create({
       data: {
         name,
         description,
       },
-    });
-    const updatedProject = await client.projects.update({
-      where: { id: projectId },
-      data: { tech_lang: { connect: { id: newTechLang.id } } },
     });
     res.status(200).json(newTechLang);
   } catch (err) {
@@ -35,6 +30,21 @@ exports.getTechLang = async (req, res, next) => {
       throw createError(404, "Information not found");
     }
     res.status(200).json(techLang);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getOneTechLang = async (req, res, next) => {
+  try {
+    const techlangId = Number(req.params.techlangId);
+    const techlang = await client.tech_Lang.findUnique({
+      where: { id: techlangId },
+    });
+    if (!techlang) {
+      throw createError(404, "Technology or Language not found");
+    }
+    res.status(200).json(techlang);
   } catch (err) {
     next(err);
   }

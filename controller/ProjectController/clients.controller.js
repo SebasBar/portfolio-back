@@ -4,7 +4,6 @@ const createError = require("http-errors");
 exports.createClient = async (req, res, next) => {
   try {
     const { name, industry, description } = req.body;
-    const projectId = Number(req.params.projectId);
     const newClient = await client.clients.create({
       data: {
         name,
@@ -12,17 +11,17 @@ exports.createClient = async (req, res, next) => {
         description,
       },
     });
-    const updatedProject = await client.projects.update({
-      where: { id: projectId },
-      data: { clients: { connect: { id: newClient.id } } },
-    });
+    // const updatedProject = await client.projects.update({
+    //   where: { id: projectId },
+    //   data: { clients: { connect: { id: newClient.id } } },
+    // });
     res.status(200).json(newClient);
   } catch (err) {
     next(err);
   }
 };
 
-exports.getClient = async (req, res, next) => {
+exports.getClients = async (req, res, next) => {
   try {
     const clients = await client.clients.findMany({
       select: {
@@ -35,6 +34,21 @@ exports.getClient = async (req, res, next) => {
     });
     if (!clients) {
       throw createError(404, "Information not found");
+    }
+    res.status(200).json(clients);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getOneClient = async (req, res, next) => {
+  try {
+    const clientId = Number(req.params.clientId);
+    const clients = await client.clients.findUnique({
+      where: { id: clientId },
+    });
+    if (!clients) {
+      throw createError(404, "Client not found");
     }
     res.status(200).json(clients);
   } catch (err) {

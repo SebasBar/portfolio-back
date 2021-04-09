@@ -3,11 +3,20 @@ const createError = require("http-errors");
 
 exports.createProject = async (req, res, next) => {
   try {
-    const { name, description, github_link, deployed_link } = req.body;
+    const {
+      name,
+      description,
+      description2,
+      description3,
+      github_link,
+      deployed_link,
+    } = req.body;
     const newProject = await client.projects.create({
       data: {
         name,
         description,
+        description2,
+        description3,
         github_link,
         deployed_link,
       },
@@ -24,11 +33,20 @@ exports.createProject = async (req, res, next) => {
 
 exports.createProjectNoConnected = async (req, res, next) => {
   try {
-    const { name, description, github_link, deployed_link } = req.body;
+    const {
+      name,
+      description,
+      description2,
+      description3,
+      github_link,
+      deployed_link,
+    } = req.body;
     const newProject = await client.projects.create({
       data: {
         name,
         description,
+        description2,
+        description3,
         github_link,
         deployed_link,
       },
@@ -58,6 +76,27 @@ exports.getProjects = async (req, res, next) => {
   }
 };
 
+exports.getOneProject = async (req, res, next) => {
+  try {
+    const projectId = Number(req.params.projectId);
+    const project = await client.projects.findUnique({
+      where: { id: projectId },
+      include: {
+        pictures: true,
+        tech_lang: true,
+        clients: true,
+        teamates: true,
+      },
+    });
+    if (!project) {
+      throw createError(404, "information not found");
+    }
+    res.status(200).json(project);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.deleteProject = async (req, res, next) => {
   try {
     const projectId = Number(req.params.projectId);
@@ -79,12 +118,21 @@ exports.deleteProject = async (req, res, next) => {
 exports.updateProject = async (req, res, next) => {
   try {
     const projectId = Number(req.params.projectId);
-    const { name, description, github_link, deployed_link } = req.body;
+    const {
+      name,
+      description,
+      description2,
+      description3,
+      github_link,
+      deployed_link,
+    } = req.body;
     const updatedProject = await client.projects.update({
       where: { id: projectId },
       data: {
         name,
         description,
+        description2,
+        description3,
         github_link,
         deployed_link,
       },
@@ -145,10 +193,7 @@ exports.connectClient = async (req, res, next) => {
       where: { id: projectId },
       data: { clients: { connect: { id: clientId } } },
       include: {
-        pictures: true,
-        tech_lang: true,
         clients: true,
-        teamates: true,
       },
     });
     res.status(200).json(updatedProject);

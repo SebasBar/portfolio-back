@@ -3,12 +3,13 @@ const createError = require("http-errors");
 
 exports.createSebasInfo = async (req, res, next) => {
   try {
-    const { first_name, last_name, picture, github_page } = req.body;
+    const { first_name, last_name, picture, profile, github_page } = req.body;
     const newInfo = await client.sebasBar.create({
       data: {
         first_name,
         last_name,
         picture,
+        profile,
         github_page,
       },
     });
@@ -20,13 +21,14 @@ exports.createSebasInfo = async (req, res, next) => {
 
 exports.updateSebasInfo = async (req, res, next) => {
   try {
-    const { first_name, last_name, picture, github_page } = req.body;
+    const { first_name, last_name, picture, profile, github_page } = req.body;
     const updatedSebasInfo = await client.sebasBar.update({
       where: { id: 1 },
       data: {
         first_name,
         last_name,
         picture,
+        profile,
         github_page,
       },
       include: {

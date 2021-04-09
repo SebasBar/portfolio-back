@@ -10,10 +10,10 @@ exports.createPicture = async (req, res, next) => {
         picture,
       },
     });
-    const updatedProject = await client.projects.update({
-      where: { id: projectId },
-      data: { pictures: { connect: { id: newPicture.id } } },
-    });
+    // const updatedProject = await client.projects.update({
+    //   where: { id: projectId },
+    //   data: { pictures: { connect: { id: newPicture.id } } },
+    // });
     res.status(200).json(newPicture);
   } catch (err) {
     next(err);
