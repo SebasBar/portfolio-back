@@ -4,6 +4,7 @@ CREATE TABLE "SebasBar" (
     "first_name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
     "picture" TEXT NOT NULL,
+    "profile" TEXT,
     "github_page" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
@@ -14,7 +15,6 @@ CREATE TABLE "Credentials" (
     "id" SERIAL NOT NULL,
     "user" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "sebasBarId" INTEGER,
 
     PRIMARY KEY ("id")
 );
@@ -95,6 +95,8 @@ CREATE TABLE "Projects" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "description2" TEXT,
+    "description3" TEXT,
     "github_link" TEXT NOT NULL,
     "deployed_link" TEXT,
     "sebasBarId" INTEGER,
@@ -174,9 +176,6 @@ CREATE UNIQUE INDEX "_ProjectsToTeamates_AB_unique" ON "_ProjectsToTeamates"("A"
 
 -- CreateIndex
 CREATE INDEX "_ProjectsToTeamates_B_index" ON "_ProjectsToTeamates"("B");
-
--- AddForeignKey
-ALTER TABLE "Credentials" ADD FOREIGN KEY ("sebasBarId") REFERENCES "SebasBar"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Phones" ADD FOREIGN KEY ("sebasBarId") REFERENCES "SebasBar"("id") ON DELETE SET NULL ON UPDATE CASCADE;
