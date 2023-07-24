@@ -1,13 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model SebasBar {
@@ -17,15 +14,14 @@ model SebasBar {
   picture           String
   profile           String?
   github_page       String
-  phones            Phones[]
-  emails            Emails[]
-  social_networks   Social_Networks[]
   documents         Documents[]
   education         Education[]
+  emails            Emails[]
+  phones            Phones[]
+  projects          Projects[]
+  social_networks   Social_Networks[]
   special_knowledge Special_Knowledge[]
   work_experience   Work_Experience[]
-  projects          Projects[]
-
 }
 
 model Credentials {
@@ -37,31 +33,31 @@ model Credentials {
 model Phones {
   id         Int       @id @default(autoincrement())
   number     String
-  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId Int?
+  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
 }
 
 model Emails {
   id         Int       @id @default(autoincrement())
   address    String
-  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId Int?
+  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
 }
 
 model Social_Networks {
   id         Int       @id @default(autoincrement())
   name       String
   address    String
-  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId Int?
+  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
 }
 
 model Documents {
   id         Int       @id @default(autoincrement())
   name       String
   document   String
-  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId Int?
+  SebasBar   SebasBar? @relation(fields: [sebasBarId], references: [id])
 }
 
 model Education {
@@ -69,16 +65,16 @@ model Education {
   degree      String
   description String
   time        String?
-  SebasBar    SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId  Int?
+  SebasBar    SebasBar? @relation(fields: [sebasBarId], references: [id])
 }
 
 model Special_Knowledge {
   id          Int       @id @default(autoincrement())
   name        String
   description String
-  SebasBar    SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId  Int?
+  SebasBar    SebasBar? @relation(fields: [sebasBarId], references: [id])
 }
 
 model Work_Experience {
@@ -87,8 +83,8 @@ model Work_Experience {
   position     String
   description  String
   time         String
-  SebasBar     SebasBar? @relation(fields: [sebasBarId], references: [id])
   sebasBarId   Int?
+  SebasBar     SebasBar? @relation(fields: [sebasBarId], references: [id])
 }
 
 model Projects {
@@ -99,26 +95,26 @@ model Projects {
   description3  String?
   github_link   String
   deployed_link String?
-  pictures      Pictures[]
-  tech_lang     Tech_Lang[]
-  clients       Clients[]
-  teamates      Teamates[]
-  SebasBar      SebasBar?   @relation(fields: [sebasBarId], references: [id])
   sebasBarId    Int?
+  pictures      Pictures[]
+  SebasBar      SebasBar?   @relation(fields: [sebasBarId], references: [id])
+  clients       Clients[]   @relation("ClientsToProjects")
+  teamates      Teamates[]  @relation("ProjectsToTeamates")
+  tech_lang     Tech_Lang[] @relation("ProjectsToTech_Lang")
 }
 
 model Pictures {
   id         Int       @id @default(autoincrement())
   picture    String
-  Projects   Projects? @relation(fields: [projectsId], references: [id])
   projectsId Int?
+  Projects   Projects? @relation(fields: [projectsId], references: [id])
 }
 
 model Tech_Lang {
   id          Int        @id @default(autoincrement())
   name        String
   description String
-  projects    Projects[]
+  projects    Projects[] @relation("ProjectsToTech_Lang")
 }
 
 model Clients {
@@ -126,12 +122,12 @@ model Clients {
   name        String
   industry    String
   description String
-  projects    Projects[]
+  projects    Projects[] @relation("ClientsToProjects")
 }
 
 model Teamates {
   id          Int        @id @default(autoincrement())
   name        String
   github_link String?
-  projects    Projects[]
+  projects    Projects[] @relation("ProjectsToTeamates")
 }

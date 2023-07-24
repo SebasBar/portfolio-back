@@ -21,7 +21,7 @@ exports.createProject = async (req, res, next) => {
         deployed_link,
       },
     });
-    const updatedSebasBar = await client.sebasBar.update({
+    await client.sebasBar.update({
       where: { id: 1 },
       data: { projects: { connect: { id: newProject.id } } },
     });
@@ -60,12 +60,12 @@ exports.createProjectNoConnected = async (req, res, next) => {
 exports.getProjects = async (req, res, next) => {
   try {
     const projectInfo = await client.projects.findMany({
-      include: {
-        pictures: true,
-        tech_lang: true,
-        clients: true,
-        teamates: true,
-      },
+      // include: {
+      //   pictures: true,
+      //   tech_lang: true,
+      //   clients: true,
+      //   teamates: true,
+      // },
     });
     if (!projectInfo) {
       throw createError(404, "information not found");

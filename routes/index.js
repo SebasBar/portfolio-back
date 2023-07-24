@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const express = require("express");
 const sebasRoutes = require("./SebasBarRoutes/sebasbar.routes");
 const projectRoutes = require("./ProjectRoutes/projects.routes");
 const authRoutes = require("./SecurityRoutes/auth.routes");
